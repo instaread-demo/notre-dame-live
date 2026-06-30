@@ -337,7 +337,7 @@ dataLayer.push({"event": "Page Category", "category": "ND.edu"});dataLayer.push(
           <!-- end expert -->
         </header>
         <section class="instaread-audio-player" aria-label="Instaread audio player">
-          <audio class="instaread-audio-source" src="file:///C:/Users/Kaye/Documents/Codex/2026-06-30/design-and-add-an-audio-player-2/outputs/article-audio.mp3" preload="metadata"></audio>
+          <audio class="instaread-audio-source" data-src="article-audio.mp3" preload="metadata"></audio>
           <div class="instaread-player-top">
             <button class="instaread-skip" type="button" data-skip="-15" aria-label="Rewind 15 seconds">15</button>
             <button class="instaread-speed" type="button" aria-label="Change playback speed">1X</button>
@@ -348,7 +348,7 @@ dataLayer.push({"event": "Page Category", "category": "ND.edu"});dataLayer.push(
             <button class="instaread-play" type="button" aria-label="Play audio"><span></span></button>
             <div class="instaread-wave-wrap">
               <div class="instaread-waveform" aria-hidden="true"><i style="height:22px"></i><i style="height:28px"></i><i style="height:18px"></i><i style="height:35px"></i><i style="height:24px"></i><i style="height:43px"></i><i style="height:26px"></i><i style="height:18px"></i><i style="height:34px"></i><i style="height:45px"></i><i style="height:25px"></i><i style="height:30px"></i><i style="height:16px"></i><i style="height:38px"></i><i style="height:29px"></i><i style="height:49px"></i><i style="height:21px"></i><i style="height:42px"></i><i style="height:19px"></i><i style="height:31px"></i><i style="height:37px"></i><i style="height:24px"></i><i style="height:47px"></i><i style="height:22px"></i><i style="height:28px"></i><i style="height:34px"></i><i style="height:16px"></i><i style="height:41px"></i><i style="height:27px"></i><i style="height:50px"></i><i style="height:21px"></i><i style="height:33px"></i><i style="height:44px"></i><i style="height:25px"></i><i style="height:38px"></i><i style="height:17px"></i><i style="height:31px"></i><i style="height:48px"></i><i style="height:22px"></i><i style="height:35px"></i><i style="height:28px"></i><i style="height:53px"></i><i style="height:19px"></i><i style="height:42px"></i><i style="height:30px"></i><i style="height:46px"></i><i style="height:23px"></i><i style="height:36px"></i><i style="height:55px"></i><i style="height:24px"></i><i style="height:41px"></i><i style="height:27px"></i><i style="height:18px"></i><i style="height:43px"></i><i style="height:32px"></i><i style="height:48px"></i><i style="height:22px"></i><i style="height:39px"></i><i style="height:27px"></i><i style="height:35px"></i><i style="height:17px"></i><i style="height:45px"></i><i style="height:26px"></i><i style="height:40px"></i><i style="height:21px"></i><i style="height:51px"></i><i style="height:29px"></i><i style="height:37px"></i><i style="height:23px"></i><i style="height:44px"></i><i style="height:18px"></i><i style="height:33px"></i><i style="height:47px"></i><i style="height:25px"></i><i style="height:39px"></i><i style="height:20px"></i><i style="height:45px"></i><i style="height:31px"></i><i style="height:52px"></i><i style="height:24px"></i><i style="height:38px"></i><i style="height:19px"></i><i style="height:43px"></i><i style="height:28px"></i><i style="height:36px"></i><i style="height:46px"></i></div>
-              <span class="instaread-brand"><img src="file:///C:/Users/Kaye/Documents/Codex/2026-06-30/design-and-add-an-audio-player-2/outputs/instaread-logo.webp" alt=""> Instaread</span>
+              <span class="instaread-brand"><img data-src="instaread-logo.webp" alt=""> Instaread</span>
             </div>
           </div>
         </section>
@@ -596,6 +596,12 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!player) return;
 
   const audio = player.querySelector(".instaread-audio-source");
+  const localAssetUrl = (filename) => new URL(filename, window.location.href).href;
+  audio.src = localAssetUrl(audio.dataset.src);
+  player.querySelectorAll("[data-src]").forEach((asset) => {
+    if (asset === audio) return;
+    asset.src = localAssetUrl(asset.dataset.src);
+  });
   let duration = 436;
   const playButton = player.querySelector(".instaread-play");
   const speedButton = player.querySelector(".instaread-speed");
